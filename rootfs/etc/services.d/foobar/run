@@ -1,0 +1,12 @@
+#!/usr/bin/execlineb -S0
+
+trap {
+  term {
+    foreground { bash -c "echo $(date)" }
+    foreground { strace -e trace=signal bash -c "sleep 5" }
+    foreground { importas -i ! ! kill -TERM ${!} }
+    foreground { bash -c "echo $(date)" }
+  }
+}
+
+bash -c "sleep 10000"
